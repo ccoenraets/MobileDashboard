@@ -1,0 +1,4 @@
+*.apk
+*.ipa
+*.bar
+bin-debug/
