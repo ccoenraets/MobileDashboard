@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		xmlns:charts="charts.*"
+		creationComplete="chart1.getData()">
+	
+	<s:states>
+		<s:State name="portrait"/>
+		<s:State name="landscape"/>
+	</s:states>
+
+	<charts:ProductColumnChart id="chart1" change="chart2.getData(chart1.selectedItem)"
+		top="20" left="20" right="20" height="{(height-60)/2}"
+		bottom.landscape="20" width.landscape="{(width-60)/2}" height.landscape="{undefined}" right.landscape="{undefined}"/>
+	
+	<charts:ProductAreaChart id="chart2"
+		bottom="20" left="20" right="20" height="{(height-60)/2}"
+		top.landscape="20" width.landscape="{(width-60)/2}" height.landscape="{undefined}" left.landscape="{undefined}"/>
+
+</s:View>

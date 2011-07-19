@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+							xmlns:s="library://ns.adobe.com/flex/spark" firstView="views.HomeView"
+							creationComplete="creationCompleteHandler()"
+							splashScreenImage="@Embed('assets/splash.png')">
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+
+			protected function creationCompleteHandler():void
+			{
+				Multitouch.inputMode = MultitouchInputMode.GESTURE;
+				addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeHandler);
+			}
+			
+			protected function swipeHandler(e:TransformGestureEvent):void
+			{
+				navigator.popToFirstView();				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Style source="styles.css"/>
+	
+	<s:navigationContent>
+		<s:Button icon="@Embed('assets/back.png')" click="navigator.popView();" height="55"/>
+	</s:navigationContent>
+
+</s:ViewNavigatorApplication>

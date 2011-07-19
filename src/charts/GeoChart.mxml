@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	<fx:Metadata>
+		[Event(name="change")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.HitData;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var chartTitle:String = "Product by Geo" ;
+			
+			
+			public var selectedItem:String;
+			
+			[Bindable]
+			public var data:ArrayCollection;
+			
+			public function getData(item:Object = null):void
+			{
+				if (item) chartTitle = "Product by Geo - " + item; 
+				data = new ArrayCollection( [
+					{ region: "North America", total: 1500 + Math.random() * 1500 },                            
+					{ region: "Latin America", total: 500  + Math.random() * 500 },                           
+					{ region: "APAC", total: 800  + Math.random() * 800 },                            
+					{ region: "Japan", total: 600 + Math.random() * 600  },                            
+					{ region: "Europe", total: 1500  + Math.random() * 1500  } ]);             
+				chart.dataProvider = data;
+			}
+			
+			protected function getDataTip(hitData:HitData):String
+			{
+				var region:String = hitData.item.region;
+				var total:Number = hitData.item.total;
+				return "<p align='center'><b>" + region + "</b><br>$" + nf.format(total)+"</p>";
+			}
+			
+			protected function getSliceLabel(item:Object, arg2:String, arg3:Number, arg4:Number):String
+			{
+				return item==null?"":item.region;
+			}
+			
+			protected function itemClickHandler(event:ChartItemEvent):void
+			{
+				var arr:Array = [];
+				arr[event.hitData.chartItem.index] = 0.2;
+				pieSeries.perWedgeExplodeRadius = arr;
+				selectedItem = event.hitData.item.region;
+				dispatchEvent(new Event("change"));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<mx:SeriesInterpolate id="interpolate" duration="500"/>
+		<s:NumberFormatter id="nf" fractionalDigits="0"/>
+	</fx:Declarations>
+	
+	<s:Label id="title" text="{chartTitle}" styleName="title"/>
+	
+	<mx:PieChart id="chart" fontSize="16"
+				 top="0" left="0" right="0" bottom="30"
+				 showDataTips="true" dataTipFunction="getDataTip"
+				 itemClick="itemClickHandler(event)">
+		
+		<mx:series>
+			<mx:PieSeries id="pieSeries" field="total" nameField="region" 
+						  showDataEffect="{interpolate}"
+						  labelPosition="inside"
+						  labelFunction="getSliceLabel"/>
+		</mx:series>
+	</mx:PieChart>
+
+</s:Group>

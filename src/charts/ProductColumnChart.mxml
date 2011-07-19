@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	<fx:Metadata>
+		[Event(name="change")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.HitData;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var chartTitle:String = "Revenue by Product";
+			
+			public var selectedItem:String;
+			
+			public function getData():void
+			{
+				var results:Array = [];
+				results[0] = {product: "Zeta", value: 25 + Math.random() * 50, forecast: 25 + Math.random() * 70};
+				results[1] = {product: "Kappa", value: 45 + Math.random() * 45, forecast: 45 + Math.random() * 50};
+				results[2] = {product: "Lambda", value: 30 + Math.random() * 30, forecast: 40 + Math.random() * 55};
+				results[3] = {product: "Sigma", value: 40 + Math.random() * 40, forecast: 40 + Math.random() * 55};
+				results[4] = {product: "Omega", value: 35 + Math.random() * 35, forecast: 25 + Math.random() * 70};
+				chart.dataProvider = new ArrayCollection(results);
+			}
+			
+			protected function getDataTip(hitData:HitData):String
+			{
+				var value:Boolean = Object(hitData.element).yField == "value";
+				return "<p align='center'><b>" + hitData.chartItem.item.product + 
+					"</b><br>" + (value?"Revenue:":"Forecast:") + 
+					" $" + nf.format(Object(hitData.chartItem).yValue * 1000)+"</p>";
+			}
+
+			
+			protected function chart_itemClickHandler(event:ChartItemEvent):void
+			{
+				selectedItem = event.hitData.chartItem.item.product;
+				dispatchEvent(new Event('change'));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<mx:SeriesInterpolate id="interpolate"/>
+		<s:NumberFormatter id="nf" fractionalDigits="0"/>
+	</fx:Declarations>
+	
+	<s:Label id="title" text="{chartTitle}" styleName="title"/>
+	
+	<mx:ColumnChart id="chart" fontSize="16"
+					bottom="0" left="0" right="0" top="30"
+					showDataTips="true" dataTipFunction="getDataTip"
+					itemClick="chart_itemClickHandler(event)" seriesFilters="[]">
+		
+		<mx:horizontalAxis>
+			<mx:CategoryAxis categoryField="product"/>
+		</mx:horizontalAxis>
+		
+		<mx:verticalAxis>
+			<mx:LinearAxis id="vAxis" minimum="0" maximum="100"/>
+		</mx:verticalAxis>
+		
+		<mx:series>
+			<mx:ColumnSeries yField="value" showDataEffect="{interpolate}"/>
+			<mx:LineSeries yField="forecast" form="curve" displayName="forecast">
+				<mx:stroke>
+					<s:SolidColorStroke weight="1"/> 
+				</mx:stroke>
+			</mx:LineSeries>
+		</mx:series>
+		
+	</mx:ColumnChart>
+
+</s:Group>

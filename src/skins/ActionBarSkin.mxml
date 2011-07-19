@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.ActionBar")]
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="titleContentWithActionAndNavigation" />
+		<s:State name="titleContentWithNavigation" />
+		<s:State name="titleContentWithAction" />
+		<s:State name="titleContent" />
+		<s:State name="titleWithActionAndNavigation" />
+		<s:State name="titleWithNavigation" />
+		<s:State name="titleWithAction" />
+		<s:State name="title" />
+	</s:states>
+	
+	<!-- SkinParts
+	name=titleGroup, type=spark.components.Group, required=false
+	name=actionGroup, type=spark.components.Group, required=false
+	name=navigationGroup, type=spark.components.Group, required=false
+	name=titleDisplay, type=spark.core.IDisplayText, required=false
+	-->
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<s:Image source="@Embed('assets/background.png')" scaleMode="stretch" left="0" right="0"/>
+	<s:Image source="@Embed('assets/logo.png')" horizontalCenter="0" verticalCenter="0"/>
+	
+	<s:HGroup>
+		<s:Group id="navigationGroup">
+		</s:Group>
+		
+		<s:Group id="titleGroup">
+		</s:Group>
+		
+		<s:Group id="actionGroup">
+		</s:Group>
+	</s:HGroup>
+	
+</s:Skin>

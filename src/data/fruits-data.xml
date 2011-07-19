@@ -1,0 +1,75 @@
+<data>
+
+    <result month="Jan-04">
+        <apple>81768</apple>
+        <orange>60310</orange>
+        <banana>43357</banana>
+    </result>
+
+    <result month="Feb-04">
+        <apple>81156</apple>
+        <orange>58883</orange>
+        <banana>49280</banana>
+    </result>
+
+    <result month="Mar-04">
+        <apple>81667</apple>
+        <orange>59640</orange>
+        <banana>31309</banana>
+    </result>
+
+    <result month="Apr-04">
+        <apple>97807</apple>
+        <orange>61508</orange>
+        <banana>33299</banana>
+    </result>
+
+    <result month="May-04">
+        <apple>86451</apple>
+        <orange>63985</orange>
+        <banana>34399</banana>
+    </result>
+
+    <result month="Jun-04">
+        <apple>82711</apple>
+        <orange>58621</orange>
+        <banana>41584</banana>
+    </result>
+
+    <result month="Jul-04">
+        <apple>88256</apple>
+        <orange>64888</orange>
+        <banana>47472</banana>
+    </result>
+
+    <result month="Aug-04">
+        <apple>85660</apple>
+        <orange>68719</orange>
+        <banana>30767</banana>
+    </result>
+
+    <result month="Sep-04">
+        <apple>96160</apple>
+        <orange>62580</orange>
+        <banana>34409</banana>
+    </result>
+
+    <result month="Oct-04">
+        <apple>85553</apple>
+        <orange>58886</orange>
+        <banana>41358</banana>
+    </result>
+
+    <result month="Nov-04">
+        <apple>83480</apple>
+        <orange>65002</orange>
+        <banana>31306</banana>
+    </result>
+
+    <result month="Dec-04">
+        <apple>84790</apple>
+        <orange>50754</orange>
+        <banana>44211</banana>
+    </result>
+
+</data>

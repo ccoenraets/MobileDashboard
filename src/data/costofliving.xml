@@ -1,0 +1,93 @@
+<data>
+
+    <city name="San Francisco">
+        <income>74773</income>
+        <costofliving>209.5</costofliving>
+        <population>746777</population>
+    </city>
+
+    <city name="Seattle">
+        <income>50993</income>
+        <costofliving>135.7</costofliving>
+        <population>537150</population>
+    </city>
+
+    <city name="Chicago">
+        <income>46698</income>
+        <costofliving>119.4</costofliving>
+        <population>2799050</population>
+    </city>
+
+    <city name="Boston">
+        <income>59758</income>
+        <costofliving>142.2</costofliving>
+        <population>555249</population>
+    </city>
+
+    <city name="Washington DC">
+        <income>65083</income>
+        <costofliving>120.9</costofliving>
+        <population>519000</population>
+    </city>
+
+    <city name="Los Angeles">
+        <income>70286</income>
+        <costofliving>142.3</costofliving>
+        <population>3633591</population>
+    </city>
+
+    <city name="Miami">
+        <income>38121</income>
+        <costofliving>111.7</costofliving>
+        <population>369253</population>
+    </city>
+
+    <city name="New York">
+        <income>60765</income>
+        <costofliving>189.1</costofliving>
+        <population>7428162</population>
+    </city>
+
+    <city name="Dallas">
+        <income>51099</income>
+        <costofliving>105.8</costofliving>
+        <population>1076214</population>
+    </city>
+
+    <city name="Houston">
+        <income>46246</income>
+        <costofliving>94.5</costofliving>
+        <population>1845967</population>
+    </city>
+
+    <city name="Detroit">
+        <income>31543</income>
+        <costofliving>90.6</costofliving>
+        <population>965084</population>
+    </city>
+
+    <city name="Phoenix">
+        <income>51095</income>
+        <costofliving>102.8</costofliving>
+        <population>1211466</population>
+    </city>
+
+    <city name="Denver">
+        <income>50553</income>
+        <costofliving>111.9</costofliving>
+        <population>499775</population>
+    </city>
+
+    <city name="Indianapolis">
+        <income>46627</income>
+        <costofliving>96.7</costofliving>
+        <population>718617</population>
+    </city>
+
+    <city name="Baltimore">
+        <income>43196</income>
+        <costofliving>91.8</costofliving>
+        <population>632681</population>
+    </city>
+
+</data>

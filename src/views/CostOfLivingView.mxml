@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="Cost Of Living"
+		creationComplete="srv.send()" xmlns:mx="library://ns.adobe.com/flex/mx">
+
+
+	<fx:Script>
+		
+		<![CDATA[
+		
+		protected function getDataTip(obj:Object):String 
+		{
+			var item:Object=obj.chartItem.item;
+			return "<b>"+item.name+"</b><br>Median income: "+nf.format(item.income)+"<br>Cost of living index: "+item.costofliving+"<br>Population: "+nf.format(item.population);
+		}
+		
+		protected function currencyFormat(value:Number,prevValue:Number,axis:Object):String 
+		{
+			return nf.format(value);
+		}
+		
+		]]>
+		
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:HTTPService id="srv" url="data/costofliving.xml" result="data=srv.lastResult.data.city"/>
+		<s:NumberFormatter id="nf"/>
+	</fx:Declarations>
+	
+	<mx:BubbleChart id="chart" dataProvider="{data}" showDataTips="true" width="100%" height="100%"
+					dataTipFunction="getDataTip">
+		
+		<mx:horizontalAxis>
+			<mx:LinearAxis minimum="60" title="Cost of Living Index (100=national avg)"/>
+		</mx:horizontalAxis>
+		
+		<mx:verticalAxis>
+			<mx:LinearAxis labelFunction="currencyFormat" title="Median Income"/>
+		</mx:verticalAxis>
+		
+		<mx:series>
+			<mx:BubbleSeries xField="costofliving" yField="income" radiusField="population"/>
+		</mx:series>
+		
+	</mx:BubbleChart>
+
+
+</s:View>

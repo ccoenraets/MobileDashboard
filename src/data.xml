@@ -1,0 +1,99 @@
+<list>
+
+    <month name="Jan-04" total="400263" average="80052">
+        <region name="APAC" value="46130"/>
+        <region name="Europe" value="106976"/>
+        <region name="Japan" value="79554"/>
+        <region name="Latin America" value="39252"/>
+        <region name="North America" value="128351"/>
+    </month>
+
+    <month name="Feb-04" total="379145" average="75829">
+        <region name="APAC" value="70324"/>
+        <region name="Europe" value="88912"/>
+        <region name="Japan" value="69677"/>
+        <region name="Latin America" value="59428"/>
+        <region name="North America" value="90804"/>
+    </month>
+
+    <month name="Mar-04" total="389687" average="77937">
+        <region name="APAC" value="60431"/>
+        <region name="Europe" value="140982"/>
+        <region name="Japan" value="58196"/>
+        <region name="Latin America" value="33373"/>
+        <region name="North America" value="96705"/>
+    </month>
+
+    <month name="Apr-04" total="460329" average="92065">
+        <region name="APAC" value="78969"/>
+        <region name="Europe" value="85885"/>
+        <region name="Japan" value="78107"/>
+        <region name="Latin America" value="65796"/>
+        <region name="North America" value="151572"/>
+    </month>
+
+    <month name="May-04" total="351014" average="70202">
+        <region name="APAC" value="64069"/>
+        <region name="Europe" value="82415"/>
+        <region name="Japan" value="96397"/>
+        <region name="Latin America" value="44627"/>
+        <region name="North America" value="63506"/>
+    </month>
+
+    <month name="Jun-04" total="384855" average="76971">
+        <region name="APAC" value="55331"/>
+        <region name="Europe" value="113196"/>
+        <region name="Japan" value="55371"/>
+        <region name="Latin America" value="58323"/>
+        <region name="North America" value="102634"/>
+    </month>
+
+    <month name="Jul-04" total="335192" average="67038">
+        <region name="APAC" value="39445"/>
+        <region name="Europe" value="110750"/>
+        <region name="Japan" value="73722"/>
+        <region name="Latin America" value="50595"/>
+        <region name="North America" value="60680"/>
+    </month>
+
+    <month name="Aug-04" total="393654" average="78730">
+        <region name="APAC" value="44801"/>
+        <region name="Europe" value="98806"/>
+        <region name="Japan" value="93673"/>
+        <region name="Latin America" value="50636"/>
+        <region name="North America" value="105738"/>
+    </month>
+
+    <month name="Sep-04" total="472554" average="94510">
+        <region name="APAC" value="61134"/>
+        <region name="Europe" value="136467"/>
+        <region name="Japan" value="93624"/>
+        <region name="Latin America" value="32293"/>
+        <region name="North America" value="149036"/>
+    </month>
+
+    <month name="Oct-04" total="324299" average="64859">
+        <region name="APAC" value="32078"/>
+        <region name="Europe" value="85420"/>
+        <region name="Japan" value="80483"/>
+        <region name="Latin America" value="64390"/>
+        <region name="North America" value="61928"/>
+    </month>
+
+    <month name="Nov-04" total="415403" average="83080">
+        <region name="APAC" value="58832"/>
+        <region name="Europe" value="143128"/>
+        <region name="Japan" value="64295"/>
+        <region name="Latin America" value="58261"/>
+        <region name="North America" value="90887"/>
+    </month>
+
+    <month name="Dec-04" total="386089" average="77217">
+        <region name="APAC" value="80555"/>
+        <region name="Europe" value="118981"/>
+        <region name="Japan" value="87520"/>
+        <region name="Latin America" value="27154"/>
+        <region name="North America" value="71879"/>
+    </month>
+
+</list>

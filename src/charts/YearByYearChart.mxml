@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Metadata>
+		[Event(name="change")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.HitData;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var chartTitle:String = "Year by Year";
+			
+			protected var months:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			
+			[Bindable]
+			protected var data:ArrayCollection;
+			
+			public function getData(item:String=null):void
+			{
+				if (item) chartTitle = "Year by Year - " + item
+				var results:Array = [];
+				for (var i:int=0; i<12; i++)
+				{
+					results[i] = {month: months[i], currentYear: 20 + Math.random() * 30, lastYear: 20 + Math.random() * 30};
+				}
+				data = new ArrayCollection(results);
+			}
+			
+			protected function getDataTip(hitData:HitData):String
+			{
+				var currentYear:Boolean = Object(hitData.element).yField == "currentYear";
+				return "<b>" + hitData.item.month + " " + (currentYear ? "2011" : "2010") + "</b><br>$" +  nf.format(currentYear? hitData.item.currentYear * 1000: hitData.item.lastYear * 1000);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<mx:SeriesInterpolate id="interpolate"/>
+		<s:NumberFormatter id="nf" fractionalDigits="0"/>
+	</fx:Declarations>
+	
+	<s:Label id="title" text="{chartTitle}" styleName="title"/>
+	
+	<mx:AreaChart id="areaChart" fontSize="16" type="stacked"
+				  dataProvider="{data}"
+				  bottom="36" left="0" right="0" top="30"
+				  showDataTips="true" dataTipFunction="getDataTip"
+				  itemClick="dispatchEvent(new Event('change'))">
+		
+		<mx:horizontalAxis>
+			<mx:CategoryAxis id="hAxis" categoryField="month" />
+		</mx:horizontalAxis>
+		
+		<mx:horizontalAxisRenderers>
+			<mx:AxisRenderer axis="{hAxis}" canDropLabels="true" />
+		</mx:horizontalAxisRenderers>		
+		
+		
+		<mx:verticalAxis>
+			<mx:LinearAxis id="vAxis" maximum="100"/>
+		</mx:verticalAxis>
+		
+		<mx:series>
+			<mx:AreaSeries yField="lastYear" showDataEffect="{interpolate}" displayName="2010"/>
+			<mx:AreaSeries yField="currentYear" showDataEffect="{interpolate}" displayName="2011"/>
+		</mx:series>
+		
+	</mx:AreaChart>
+	
+	<mx:Legend  horizontalCenter="16" bottom="0"
+				dataProvider="{areaChart}"
+				direction="horizontal"/>
+	
+</s:Group>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="PieView" xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:charts="charts.*"
+		creationComplete="creationCompleteHandler()">
+
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.HitData;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+
+			protected var months:Array = ["01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11"];
+			
+			protected function creationCompleteHandler():void
+			{
+				data = new ArrayCollection( [
+					{ region: "North America", total: 2400,                            
+						results: [	{quarter: "Q1", Alpha: 100, Beta: 200, Gamma: 300}, 
+							{quarter: "Q2", Alpha: 240, Beta: 120, Gamma: 400},
+							{quarter: "Q3", Alpha: 80, Beta: 220, Gamma: 350},
+							{quarter: "Q4", Alpha: 280, Beta: 160, Gamma: 190} ] },
+					{ region: "Latin America", total: 1000,                            
+						results: [	{quarter: "Q1", Alpha: 120, Beta: 210, Gamma: 80}, 
+							{quarter: "Q2", Alpha: 140, Beta: 180, Gamma: 70},
+							{quarter: "Q3", Alpha: 70, Beta: 90, Gamma: 220},
+							{quarter: "Q4", Alpha: 180, Beta: 100, Gamma: 80} ] },
+					{ region: "APAC", total: 1200,                            
+						results: [	{quarter: "Q1", Alpha: 70, Beta: 110, Gamma: 180}, 
+							{quarter: "Q2", Alpha: 40, Beta: 80, Gamma: 120},
+							{quarter: "Q3", Alpha: 90, Beta: 90, Gamma: 220},
+							{quarter: "Q4", Alpha: 120, Beta: 150, Gamma: 220} ] },
+					{ region: "Japan", total: 800,                            
+						results: [	{quarter: "Q1", Alpha: 20, Beta: 60, Gamma: 50}, 
+							{quarter: "Q2", Alpha: 30, Beta: 70, Gamma: 200},
+							{quarter: "Q3", Alpha: 50, Beta: 50, Gamma: 130},
+							{quarter: "Q4", Alpha: 70, Beta: 40, Gamma: 100} ] },
+					{ region: "Europe", total: 2000,                            
+						results: [	{quarter: "Q1", Alpha: 70, Beta: 100, Gamma: 280}, 
+							{quarter: "Q2", Alpha: 230, Beta: 270, Gamma: 110},
+							{quarter: "Q3", Alpha: 190, Beta: 150, Gamma: 140},
+							{quarter: "Q4", Alpha: 300, Beta: 220, Gamma: 90} ] }
+				]);
+				
+			}
+
+			protected function dataTipPie(hitData:HitData):String
+			{
+				var region:String = hitData.item.region;
+				var total:Number = hitData.item.total;
+				return "<p align='center'><b>" + region + "</b><br>$" + nf.format(total)+"</p>";
+			}
+			
+			protected function chart2_dataTip(hitData:HitData):String
+			{
+				var region:String = hitData.item.region;
+				var total:Number = hitData.item.total;
+				return "<p align='center'><b>" + Object(hitData.element).yField + "</b><br>" + hitData.item.quarter + "<br>$" + nf.format(Object(hitData.chartItem).yValue)+"</p>";
+			}
+			
+			protected function chart3_dataTip(hitData:HitData):String
+			{
+				var region:String = hitData.item.region;
+				var total:Number = hitData.item.total;
+				return "<p align='center'><b>" + Object(hitData.element).yField + "</b><br>" + months[Object(hitData.chartItem).xValue] + "<br>$" + nf.format(Object(hitData.chartItem).yValue)+"</p>";
+			}
+			
+			protected function getSliceLabel(item:Object, arg2:String, arg3:Number, arg4:Number):String
+			{
+				return item==null?"":item.region;
+			}
+			
+			protected function pcRegion_itemClickHandler(event:ChartItemEvent):void
+			{
+				var arr:Array = [];
+				arr[event.hitData.chartItem.index] = 0.2;
+				pieSeries.perWedgeExplodeRadius = arr;
+				chart2.dataProvider = event.hitData.chartItem.item.results;
+				title2.text = "Product Breakdown - " + event.hitData.chartItem.item.region 
+			}
+			
+			protected function chart2_itemClickHandler(event:ChartItemEvent):void
+			{
+				var results:Array = [];
+				for (var i:int=0; i<12; i++)
+				{
+					results[i] = new Object();
+					results[i].month = months[i];
+					results[i].NorthAmerica = 100 + Math.random() * 35;
+					results[i].Europe = 80 + Math.random() * 35;
+					results[i].LatinAmerica = 70 + Math.random() * 30;
+					results[i].APAC = 40 + Math.random() * 30;
+					results[i].Japan = 20 + Math.random() * 30;
+				}
+				chart3.dataProvider = new ArrayCollection(results);
+				title3.text = "Product " + Object(event.hitData.element).yField + " by Geo";
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:NumberFormatter id="nf"/>
+		<mx:SeriesInterpolate id="interpolate"/>
+		<s:RadioButtonGroup id="labelPositionGroup"/>
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="portrait"/>
+		<s:State name="landscape"/>
+	</s:states>
+	
+	<s:Group
+		top="20" left="20" right="20" height="{(height-60)/2}"
+		bottom.landscape="20" width.landscape="{(width-60)/2}" height.landscape="{undefined}" right.landscape="{undefined}">
+		<s:Label text="Revenue by Geo" styleName="title"/>
+		<mx:PieChart id="pcRegion" dataProvider="{data}" fontSize="16"
+					 top="0" left="0" right="0" bottom="30"
+					 showDataTips="true" dataTipFunction="dataTipPie"
+					 itemClick="pcRegion_itemClickHandler(event)">
+			
+			<mx:series>
+				<mx:PieSeries id="pieSeries" field="total" nameField="region" 
+							  labelPosition="{labelPositionGroup.selectedValue}"
+							  labelFunction="getSliceLabel"/>
+			</mx:series>
+		</mx:PieChart>
+		
+		<s:Group horizontalCenter="0" bottom="0">
+			<s:layout>
+				<s:HorizontalLayout/>
+			</s:layout>
+			<s:RadioButton label="inside" group="{labelPositionGroup}" selected="true"/>
+			<s:RadioButton label="outside" group="{labelPositionGroup}"/>
+			<s:RadioButton label="callout" group="{labelPositionGroup}"/>
+		</s:Group>
+		
+	</s:Group>
+	
+	<s:Group
+		bottom="20" left="20" width="{(width-60)/2}" height="{(height-60)/2}"
+		top.landscape="20" right.landscape="20" bottom.landscape="{undefined}" left.landscape="{undefined}">
+		
+		<s:Label id="title2" text="Product Breakdown" styleName="title"/>
+		<mx:ColumnChart id="chart2" fontSize="16" top="30" bottom="30" left="0" right="0"
+						showDataTips="true" dataTipFunction="chart2_dataTip"
+						itemClick="chart2_itemClickHandler(event)">
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis categoryField="quarter"/>
+			</mx:horizontalAxis>
+			
+			<mx:verticalAxis>
+				<mx:LinearAxis minimum="0" maximum="400"/>
+			</mx:verticalAxis>
+			
+			<mx:series>
+				<mx:ColumnSeries yField="Alpha" displayName="Alpha" showDataEffect="{interpolate}"/>
+				<mx:ColumnSeries yField="Beta" displayName="Beta" showDataEffect="{interpolate}"/>
+				<mx:ColumnSeries yField="Gamma" displayName="Gamma" showDataEffect="{interpolate}"/>
+			</mx:series>
+		</mx:ColumnChart>
+		
+		<mx:Legend id="legend2" dataProvider="{chart2}" horizontalCenter="16" bottom="0" direction="horizontal"/>
+
+	</s:Group>
+	
+	<s:Group
+		bottom="20" right="20" width="{(width-60)/2}" height="{(height-60)/2}">
+		<s:Label id="title3" text="Product by Geo" styleName="title"/>
+		<mx:LineChart id="chart3" fontSize="16"
+						top="30" left="0" right="0" bottom="30"
+						showDataTips="true" dataTipFunction="chart3_dataTip">
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis id="hAxis" categoryField="month"/>
+			</mx:horizontalAxis>
+			
+			<mx:horizontalAxisRenderers>
+				<mx:AxisRenderer axis="{hAxis}" canDropLabels="true" />
+			</mx:horizontalAxisRenderers>		
+			
+			<mx:series>
+				<mx:LineSeries yField="NorthAmerica" displayName="NA" showDataEffect="{interpolate}"/>
+				<mx:LineSeries yField="LatinAmerica" displayName="LA" showDataEffect="{interpolate}"/>
+				<mx:LineSeries yField="Europe" displayName="Eur" showDataEffect="{interpolate}"/>
+				<mx:LineSeries yField="APAC" displayName="Asia" showDataEffect="{interpolate}"/>
+				<mx:LineSeries yField="Japan" displayName="Jap" showDataEffect="{interpolate}"/>
+			</mx:series>
+	
+		</mx:LineChart>
+		
+		<mx:Legend id="legend3" dataProvider="{chart3}" horizontalCenter="16" bottom="0" direction="horizontal"/>
+		
+	</s:Group>
+
+</s:View>

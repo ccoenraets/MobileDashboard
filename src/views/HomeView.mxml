@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		destructionPolicy="never"
+		creationComplete="trace('honeView Created')">
+
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Embed('assets/Chart_1.png')] private var icon1:Class;
+			
+			[Embed('assets/Chart_2.png')] private var icon2:Class;
+			
+			[Embed('assets/Chart_3.png')] private var icon3:Class;
+			
+			[Embed('assets/Chart_4.png')] private var icon4:Class;
+			
+			[Embed('assets/Chart_5.png')] private var icon5:Class;
+			
+			[Bindable]
+			protected var items:ArrayCollection = new ArrayCollection([
+				{name: "Revenue by Geo", view: TwoChartsView, icon: icon1, line1: "A simple two-charts dashboard", line2: "with drill-down"},
+				{name: "Ad-Hoc Report", view: SelectableSeries, icon: icon2, line1: "Add and remove series", line2: "from the results chart"},
+				{name: "Product Analysis", view: TwoChartsView2, icon: icon3, line1: "Another two-charts dashboard", line2: "with drill-down"},
+				{name: "Revenue by Product", view: ThreeChartsView, icon: icon4, line1: "A simple three-charts dashboard", line2: "with drill-down"},
+				{name: "Quarterly Results", view: FourChartsView, icon: icon5, line1: "A simple four-charts dashboard", line2: "with drill-down"},
+				{name: "Watch List", view: RealTimeChart, icon: icon1, line1: "Real time market data", line2: "updates"},
+				{name: "Stock Analysis", view: CandleView, icon: icon2, line1: "A simple CandleStickChart", line2: "for stock analysis"},
+				{name: "Map", view: MapView, icon: icon2, line1: "A simple CandleStickChart", line2: "for stock analysis"},
+				{name: "Geo Drilldown", view: TwoChartsView, icon: icon3, line1: "A simple two-charts dashboard", line2: "with drill-down"},
+				{name: "Ad-Hoc Analysis", view: SelectableSeries, icon: icon4, line1: "Add and remove series", line2: "from the results chart"},
+				{name: "Product Breakdown", view: TwoChartsView2, icon: icon5, line1: "Another two-charts dashboard", line2: "with drill-down"},
+				{name: "Revenue Dashboard", view: ThreeChartsView, icon: icon1, line1: "A simple three-charts dashboard", line2: "with drill-down"},
+				{name: "Cockpit", view: FourChartsView, icon: icon2, line1: "A simple four-charts dashboard", line2: "with drill-down"},
+				{name: "Custom Report 1", view: RealTimeChart, icon: icon3, line1: "Real time market data", line2: "updates"},
+				{name: "Custom Report 2", view: CandleView, icon: icon4, line1: "A simple CandleStickChart", line2: "for stock analysis"}]);
+			
+			protected function list_changeHandler(event:IndexChangeEvent):void
+			{
+				navigator.pushView(list.selectedItem.view);
+				list.selectedIndex = -1;	
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="portrait"/>
+		<s:State name="landscape"/>
+	</s:states>
+	
+	<s:navigationContent/>
+	
+	<s:List id="list" labelField="name" dataProvider="{items}" top="20" bottom="20" left="20" right="20"
+			change="list_changeHandler(event)">
+		<s:itemRenderer>
+			<fx:Component>
+				<s:ItemRenderer width="100%" height="200">
+					<s:Image source="{data.icon}" top="30" horizontalCenter="0"/>
+					<s:Label text="{data.name}" top="100" horizontalCenter="0" color="#646464"/>
+					<s:Label text="{data.line1}" top="130" horizontalCenter="0" color="#646464" fontSize="14"/>
+					<s:Label text="{data.line2}" top="150" horizontalCenter="0" color="#646464" fontSize="14"/>
+				</s:ItemRenderer>
+			</fx:Component>
+		</s:itemRenderer>
+		<s:layout>
+			<s:TileLayout requestedColumnCount="3" requestedColumnCount.landscape="4" columnAlign="justifyUsingWidth"/>
+		</s:layout>
+	</s:List>
+	
+</s:View>

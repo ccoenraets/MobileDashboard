@@ -1,0 +1,41 @@
+@namespace "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+
+ActionBar 
+{
+	skinClass: ClassReference("skins.ActionBarSkin");
+}
+
+TabbedViewNavigatorApplication
+{
+	backgroundColor: #000000;
+}
+
+View
+{
+	backgroundColor: #DCDCDC;
+}
+
+List
+{
+	/* alternatingItemColors: #F0F0F0,#DCDCDC; */
+	
+}
+
+global
+{
+	fontSize: 20;
+}
+
+.title 
+{
+	fontSize: 22;
+	color: #646464;
+}
+
+mx|LegendItem 
+{
+	font-size:16px;
+	font-weight: normal;
+	color: #646464;
+}

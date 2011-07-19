@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="RealTimeChart" xmlns:controller="controller.*"  xmlns:mx="library://ns.adobe.com/flex/mx"
+		viewActivate="feed.subscribe()"
+		viewDeactivate="feed.unsubscribe()"
+		creationComplete="selectItem(0)">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.events.ChartItemEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			[Embed("assets/up.png")]
+			protected var iconUp:Class;
+			
+			[Bindable]
+			[Embed("assets/down.png")]
+			protected var iconDown:Class;
+
+			protected function selectItem(index:int):void
+			{
+				var arr:Array = [];
+				arr[index] = 0.2;
+				pieSeries.perWedgeExplodeRadius = arr;
+				data = feed.stockList[index];
+				vAxis.maximum = feed.stockList[index].last * 1.08;
+				vAxis.minimum = feed.stockList[index].last * 0.92;
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<controller:Feed id="feed"/>
+		<s:NumberFormatter id="nf" fractionalDigits="2" trailingZeros="true"/>
+		<s:RadioButtonGroup id="labelPositionGroup"/>
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="portrait"/>
+		<s:State name="landscape"/>
+	</s:states>
+	
+	<s:Group
+		top="20" left="20" right="20" height="{(height-60)/2}"
+		bottom.landscape="20" width.landscape="{(width-60)/3}" height.landscape="{undefined}" right.landscape="{undefined}">
+		
+		<s:Label text="Portfolio" styleName="title"/>
+		<mx:PieChart id="pcPortfolio" dataProvider="{feed.stockList}" fontSize="16"
+					 top="0" left="0" right="0" bottom="30"
+					 showDataTips="false"
+					 itemClick="selectItem(event.hitData.chartItem.index)">
+			
+			<mx:series>
+				<mx:PieSeries id="pieSeries" field="open" nameField="symbol" 
+							  labelPosition="{labelPositionGroup.selectedValue}"
+							  labelField="symbol"/>
+			</mx:series>
+		</mx:PieChart>
+		
+		<s:HGroup horizontalCenter="0" bottom="0">
+			<s:RadioButton label="inside" group="{labelPositionGroup}" selected="true"/>
+			<s:RadioButton label="outside" group="{labelPositionGroup}"/>
+		</s:HGroup>
+		
+	</s:Group>
+	
+	<s:Group
+		bottom="20" left="20" right="20" height="{(height-60)/2}"
+		top.landscape="20" bottom.landscape="20" width.landscape="{(width-60)/3*2}" height.landscape="{undefined}" left.landscape="{undefined}">
+		
+		<s:Group top="0" left="0" right="0">
+			<s:Rect left="0" top="0" height="79" width="93">
+				<s:fill>
+					<s:SolidColor color="#F0F0F0"/>
+				</s:fill>
+			</s:Rect>
+	
+			<s:Label text="{data.symbol}" fontSize="36" top="26" left="2" textAlign="center" width="86" color="#646464"/>
+			
+			<s:Group top="0" left="86" right="10" height="39">
+				<s:Rect left="8" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#919191" alpha=".5"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="94" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#919191" alpha=".5"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="180" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#919191" alpha=".5"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="266" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#919191" alpha=".5"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="352" top="0" bottom="0" right="0">
+					<s:fill>
+						<s:SolidColor color="#919191" alpha=".5"/>
+					</s:fill>
+				</s:Rect>
+				
+				<s:Label text="Open" width="85" textAlign="right" top="10" left="1"/>
+				<s:Label text="Last" width="85" textAlign="right" top="10" left="87"/>
+				<s:Label text="Change" width="85" textAlign="right" top="10" left="173"/>
+				<s:Label text="High" width="85" textAlign="right" top="10" left="259"/>
+				<s:Label text="Low" width="85" textAlign="right" top="10" left="345"/>
+				
+			</s:Group>
+			
+			<s:Group top="40" left="86" right="10" height="39">
+				<s:Rect left="8" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#F0F0F0"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="94" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#F0F0F0"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="180" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#F0F0F0"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="266" top="0" bottom="0" width="85">
+					<s:fill>
+						<s:SolidColor color="#F0F0F0"/>
+					</s:fill>
+				</s:Rect>
+				<s:Rect left="352" top="0" bottom="0" right="0">
+					<s:fill>
+						<s:SolidColor color="#F0F0F0"/>
+					</s:fill>
+				</s:Rect>
+				
+				<s:Label text="{nf.format(data.open)}" width="85" textAlign="right" top="10" left="1"/>
+				<s:Label text="{nf.format(data.last)}" color="{data.change>0?0x006600:0xFF0000}" width="85" textAlign="right" top="10" left="75"/>
+				<s:Image source="{data.change>0?iconUp:iconDown}" left="162" top="12"/>
+				<s:Label text="{nf.format(data.change)}" width="85" textAlign="right" top="10" left="173"/>
+				<s:Label text="{nf.format(data.high)}" width="85" textAlign="right" top="10" left="259"/>
+				<s:Label text="{nf.format(data.low)}" width="85" textAlign="right" top="10" left="345"/>
+				
+			</s:Group>
+		
+		</s:Group>
+	
+		<mx:LineChart id="chart" dataProvider="{data.history}" showDataTips="true" left="0" top="100" bottom="0" right="0" fontSize="14"
+					  seriesFilters="[]">
+	
+			<mx:verticalAxis>
+				<mx:LinearAxis id="vAxis"/>
+			</mx:verticalAxis>
+	
+			<mx:series>
+				<mx:LineSeries yField="last">
+					<mx:fill>
+						<s:SolidColor color="#FF0000"/>
+					</mx:fill>
+				</mx:LineSeries>
+			</mx:series>
+			
+		</mx:LineChart>
+
+	</s:Group>
+	
+</s:View>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" xmlns:mx="library://ns.adobe.com/flex/mx">
+
+	<fx:Metadata>
+		[Event(name="change")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.charts.HitData;
+			import mx.charts.events.ChartItemEvent;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var chartTitle:String = "Revenue by Geo";
+			
+			public var selectedItem:String;
+			
+			public function getData(item:String=null):void
+			{
+				if (item) chartTitle = "Revenue by Geo - " + item;
+				var results:Array = [];
+				results[0] = {product: "Zeta", currentYear: 25 + Math.random() * 50, lastYear: 25 + Math.random() * 50};
+				results[1] = {product: "Kappa", currentYear: 45 + Math.random() * 45, lastYear: 45 + Math.random() * 45};
+				results[2] = {product: "Lambda", currentYear: 30 + Math.random() * 30, lastYear: 30 + Math.random() * 30};
+				results[3] = {product: "Sigma", currentYear: 40 + Math.random() * 40, lastYear: 40 + Math.random() * 40};
+				results[4] = {product: "Omega", currentYear: 35 + Math.random() * 35, lastYear: 35 + Math.random() * 35};
+				chart.dataProvider = new ArrayCollection(results);
+			}
+			
+			protected function getDataTip(hitData:HitData):String
+			{
+				return "<p align='center'><b>" + hitData.item.product + "</b><br>2011: $" +  nf.format(hitData.item.currentYear) + 
+					"<br>2010: $" +  nf.format(hitData.item.lastYear) + "</p>";
+			}
+
+			
+			protected function chart_itemClickHandler(event:ChartItemEvent):void
+			{
+				selectedItem = event.hitData.item.product;
+				dispatchEvent(new Event('change'));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<mx:SeriesInterpolate id="interpolate"/>
+		<s:NumberFormatter id="nf" fractionalDigits="0"/>
+	</fx:Declarations>
+	
+	<s:Label id="title" text="{chartTitle}" styleName="title"/>
+	
+	<mx:BarChart id="chart" fontSize="16"
+					bottom="36" left="0" right="0" top="30"
+					showDataTips="true" dataTipFunction="getDataTip"
+					itemClick="chart_itemClickHandler(event)">
+		
+		<mx:verticalAxis>
+			<mx:CategoryAxis categoryField="product"/>
+		</mx:verticalAxis>
+		
+		<mx:series>
+			<mx:BarSeries xField="lastYear" showDataEffect="{interpolate}" displayName="2010"/>
+			<mx:BarSeries xField="currentYear" showDataEffect="{interpolate}" displayName="2011"/>
+		</mx:series>
+		
+	</mx:BarChart>
+	
+	<mx:Legend  horizontalCenter="16" bottom="0"
+				dataProvider="{chart}"
+				direction="horizontal"/>
+
+</s:Group>
